@@ -7,8 +7,10 @@
 </head>
 <body>
     <h2>Dutch Treat</h2>
+
+
     <div class="product-info">
-        <img src="/img/VanGogh.jpg" alt="Van Gogh Image"/>
+        <img src="/img/VanGogh.jpg" alt="Van Gogh Image" />
         <h3>Mug</h3>
         <ul class="product-props">
             <li>Price: $9.99</li>
@@ -16,9 +18,10 @@
             <li>Title:</li>
             <li>Description: Self-portrait</li>
         </ul>
-        <button>Buy</button>
+        <button id="buyButton">Buy</button>
     </div>
-    
+
+    <!-- Div to create a form with different types of text boxes. -->
     <div id="theForm">
         <form>
             <label>Your Name:</label>
@@ -41,5 +44,28 @@
         </form>
     </div>
 
+    <div>
+        <div id="loginToggle">Login</div>
+        <form class="popup-form">
+            <div>
+                <label>Username</label>
+                <input />
+            </div>
+            <div>
+                <label>Password</label>
+                <input type="password" />
+            </div>
+            <div>
+                <input type="checkbox" />
+                <label>Remember me</label>
+            </div>
+            <div>
+                <input type="submit" value="Login"/>
+            </div>
+        </form>
+    </div>
+
+    <script src="js/site.js"></script>
+    <script src="lib/jquery/dist/jquery.min.js"></script>
 </body>
 </html>
