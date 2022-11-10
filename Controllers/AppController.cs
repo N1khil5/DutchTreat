@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DutchTreat.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DutchTreat.Controllers
@@ -11,14 +12,17 @@ namespace DutchTreat.Controllers
     {
         public IActionResult Index()
         {
-            //throw new InvalidProgramException("Bad things happen to good developers");
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewBag.Title = "Contact Us";
+            return View();
+        }
 
+        [HttpPost]
+        public IActionResult Contact(ContactViewModel model)
+        {
             return View();
         }
 

@@ -14,14 +14,19 @@ namespace DutchTreat
         }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews()
+                .AddRazorRuntimeCompilation();
             //services.AddRazorPages();
-            services.AddControllersWithViews();
         }
         public void Configure(WebApplication app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/error");
             }
 
             app.UseStaticFiles();
@@ -30,10 +35,14 @@ namespace DutchTreat
 
             app.UseEndpoints(cfg =>
             {
+
+                //cfg.MapRazorPages();
+
                 cfg.MapControllerRoute("Default",
                     "/{controller}/{action}/{id?}",
                     new { Controller = "App", action = "Index" });
             });
+
 
             /*
             app.UseHttpsRedirection();
