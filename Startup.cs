@@ -1,22 +1,29 @@
 ﻿using DutchTreat.Controllers;
+using DutchTreat.Services;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace DutchTreat
 {
     public class Startup
     {
-        public IConfiguration configRoot
-        {
-            get;
-        }
-        public Startup(IConfiguration configuration)
-        {
-            configRoot = configuration;
-        }
+        //public IConfiguration configRoot
+        //{
+        //    get;
+        //}
+        //public Startup(IConfiguration configuration)
+        //{
+        //    configRoot = configuration;
+        //}
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddTransient<IMailService, NullMailService>();
+            services.AddMvc();
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
-            //services.AddRazorPages();
+            services.AddRazorPages();
         }
         public void Configure(WebApplication app, IWebHostEnvironment env)
         {
@@ -36,7 +43,7 @@ namespace DutchTreat
             app.UseEndpoints(cfg =>
             {
 
-                //cfg.MapRazorPages();
+                cfg.MapRazorPages();
 
                 cfg.MapControllerRoute("Default",
                     "/{controller}/{action}/{id?}",
