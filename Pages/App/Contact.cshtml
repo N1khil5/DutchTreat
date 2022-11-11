@@ -29,7 +29,9 @@
     <label asp-for="Message">Message:</label>
     <br />
     <textarea rows="4" asp-for="Message"></textarea>
+    <span asp-validation-for="Message"></span>
     <br />
     <input type="submit" value="Send Message" />
-    <span asp-validation-for="Message"></span>
+    <div>@ViewBag.UserMessage</div>
+
 </form>

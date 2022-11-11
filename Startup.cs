@@ -8,19 +8,18 @@ namespace DutchTreat
 {
     public class Startup
     {
-        //public IConfiguration configRoot
-        //{
-        //    get;
-        //}
-        //public Startup(IConfiguration configuration)
-        //{
-        //    configRoot = configuration;
-        //}
+        public IConfiguration configRoot
+        {
+            get;
+        }
+        public Startup(IConfiguration configuration)
+        {
+            configRoot = configuration;
+        }
         public void ConfigureServices(IServiceCollection services)
         {
 
             services.AddTransient<IMailService, NullMailService>();
-            services.AddMvc();
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
             services.AddRazorPages();
@@ -43,11 +42,11 @@ namespace DutchTreat
             app.UseEndpoints(cfg =>
             {
 
-                cfg.MapRazorPages();
-
                 cfg.MapControllerRoute("Default",
                     "/{controller}/{action}/{id?}",
-                    new { Controller = "App", action = "Index" });
+                    new { Controller = "Pages", action = "Index" });
+
+                cfg.MapRazorPages();
             });
 
 
