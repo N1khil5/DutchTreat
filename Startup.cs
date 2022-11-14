@@ -1,6 +1,8 @@
 ﻿using DutchTreat.Controllers;
+using DutchTreat.Data;
 using DutchTreat.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -18,6 +20,10 @@ namespace DutchTreat
         }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DutchContext>(cfg =>
+            {
+                cfg.UseSqlServer();
+            });
 
             services.AddTransient<IMailService, NullMailService>();
             services.AddControllersWithViews()
