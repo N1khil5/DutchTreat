@@ -10,13 +10,11 @@ namespace DutchTreat
 {
     public class Startup
     {
-        public IConfiguration configRoot
+        private readonly IConfiguration _config;
+
+        public Startup(IConfiguration config)
         {
-            get;
-        }
-        public Startup(IConfiguration configuration)
-        {
-            configRoot = configuration;
+            _config = config;
         }
         public void ConfigureServices(IServiceCollection services)
         {
@@ -25,10 +23,17 @@ namespace DutchTreat
                 cfg.UseSqlServer();
             });
 
+            services.AddTransient<DutchSeeder>();
+
             services.AddTransient<IMailService, NullMailService>();
+
+            services.AddScoped<IDutchRepository, DutchRepository>();
+
             services.AddControllersWithViews()
                 .AddRazorRuntimeCompilation();
             services.AddRazorPages();
+
+            services.AddMvc();
         }
         public void Configure(WebApplication app, IWebHostEnvironment env)
         {
