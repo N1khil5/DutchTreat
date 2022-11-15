@@ -26,13 +26,13 @@ namespace DutchTreat.Controllers
             return View();
         }
 
-        [HttpGet("App")]
+        [HttpGet("contact")]
         public IActionResult Contact()
         {
             return View();
         }
 
-        [HttpPost("App/Contact")]
+        [HttpPost("contact")]
         public IActionResult Contact(ContactViewModel model)
         {
             if(ModelState.IsValid)
