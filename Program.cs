@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-using DutchTreat;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore;
@@ -12,66 +13,45 @@ namespace DutchTreat
 {
     public class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
-            var startup = new Startup(builder.Configuration);
-            startup.ConfigureServices(builder.Services); // calling ConfigureServices method
-            var app = builder.Build();
-            startup.Configure(app, builder.Environment); // calling Configure method
-
             var host = CreateHostBuilder(args).Build();
 
-            if (args.Length == 1 && args[0].ToLower() == "/seed")
+            if (args.Length > 0 && args[0].ToLower() == "/seed")
             {
-                RunSeeding(host); 
+                RunSeeding(host);
+                return;
             }
-            else
-            {
-                host.Run(); 
-            }
+
+            host.Run();
         }
 
         private static void RunSeeding(IHost host)
         {
             var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
-
             using (var scope = scopeFactory.CreateScope())
             {
                 var seeder = scope.ServiceProvider.GetService<DutchSeeder>();
                 seeder.Seed();
             }
-
         }
 
-        private static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration(SetupConfiguration)
-            .UseStartup<Startup>()
-            .Build();
-
-        private static void SetupConfiguration(WebHostBuilderContext ctx, IConfigurationBuilder builder)
-        {
-            builder.Sources.Clear();
-            builder.AddJsonFile("config.json", false, true)
-                .AddEnvironmentVariables();
-        }
-
-        private static IHostBuilder CreateHostBuilder(string[] args) =>
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration(AddCofiguration)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-            webBuilder.UseStartup<Startup>();
-            });
+                .ConfigureAppConfiguration(SetupConfiguration)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
 
-        private static void AddCofiguration(HostBuilderContext ctx, IConfigurationBuilder bldr)
+        private static void SetupConfiguration(HostBuilderContext ctx, IConfigurationBuilder builder)
         {
-            bldr.Sources.Clear();
+            // Removing the default configuration options
+            builder.Sources.Clear();
 
-            bldr.SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("config.json")
-                .AddEnvironmentVariables();
+            builder.AddJsonFile("config.json")
+                   .AddEnvironmentVariables();
+
         }
     }
 }

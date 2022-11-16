@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 
@@ -21,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Pages\Index.cshtml">
+    <Content Update="Views\App\Index.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace DutchTreat.Pages
+namespace DutchTreat.Views.App
 {
     public class IndexModel : PageModel
     {

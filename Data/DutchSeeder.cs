@@ -1,5 +1,6 @@
 ﻿using DutchTreat.Data.Entities;
 using System.Text.Json;
+using System.Collections.Generic;
 
 namespace DutchTreat.Data
 {
@@ -20,17 +21,16 @@ namespace DutchTreat.Data
             if(!_ctx.Products.Any())
             {
                 //Create sample data
-                var filePath = Path.Combine(_env.ContentRootPath,"Data/art.json");
+                string filePath = Path.Combine(_env.ContentRootPath, "Data/art.json");
                 var json = File.ReadAllText(filePath);
                 var products = JsonSerializer.Deserialize<IEnumerable<Product>>(json);
 
                 _ctx.Products.AddRange(products);
 
-                var order = new Order()
+                var order = _ctx.Orders.Where(o => o.Id == 1).FirstOrDefault();
+                if (order != null)
                 {
-                    OrderDate = DateTime.Today,
-                    OrderNumber = "10000",
-                    Items = new List<OrderItem>()
+                    order.Items = new List<OrderItem>()
                     {
                         new OrderItem()
                         {
@@ -38,11 +38,8 @@ namespace DutchTreat.Data
                             Quantity = 5,
                             UnitPrice = products.First().Price
                         }
-                    }
-                };
-
-                _ctx.Orders.Add(order);
-
+                    };
+                }
                 _ctx.SaveChanges();
             }
         }
