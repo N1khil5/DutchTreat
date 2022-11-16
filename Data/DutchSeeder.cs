@@ -1,6 +1,7 @@
 ﻿using DutchTreat.Data.Entities;
 using System.Text.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DutchTreat.Data
 {
@@ -18,7 +19,7 @@ namespace DutchTreat.Data
         {
             _ctx.Database.EnsureCreated();
 
-            if(!_ctx.Products.Any())
+            if (!_ctx.Products.Any())
             {
                 //Create sample data
                 string filePath = Path.Combine(_env.ContentRootPath, "Data/art.json");
