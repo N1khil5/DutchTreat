@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DutchTreat.Data.Entities
 {
-  public class Product
+    public class Product
   {
     public int Id { get; set; }
     public string Category { get; set; }

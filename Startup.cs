@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using DutchTreat.Data;
 using DutchTreat.Services;
@@ -31,6 +32,8 @@ namespace DutchTreat
             services.AddTransient<IMailService, NullMailService>();
 
             services.AddTransient<DutchSeeder>();
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddScoped<IDutchRepository, DutchRepository>();
 

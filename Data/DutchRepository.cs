@@ -30,6 +30,11 @@ namespace DutchTreat.Data
                 .ToList();
         }
 
+        public IEnumerable<Order> GetAllOrders(bool includeItems)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Product> GetAllProducts()
         {
             try
