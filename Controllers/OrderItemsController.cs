@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace DutchTreat.Controllers
 {
-    [Route("/api/orders/{orderid}/items")]
+    [Route("api/orders/{orderid}/items")]
     public class OrderItemsController : Controller
     {
         private readonly IDutchRepository _repository;
@@ -26,7 +26,7 @@ namespace DutchTreat.Controllers
         public IActionResult Get(int orderId) 
         {
             var order = _repository.GetOrderById(orderId);
-            if (order != null) return Ok(_mapper.Map<IEnumerable<OrderItem>,IEnumerable<OrderItemViewModel>>(order.Items));
+            if (order != null) return Ok(_mapper.Map<IEnumerable<OrderItemViewModel>>(order.Items));
             return NotFound();
         }
 
@@ -40,7 +40,7 @@ namespace DutchTreat.Controllers
 
                 if (item != null)
                 {
-                    return Ok(_mapper.Map<OrderItem, OrderItemViewModel>(item)); 
+                    return Ok(_mapper.Map<OrderItemViewModel>(item)); 
                 }
             }
 

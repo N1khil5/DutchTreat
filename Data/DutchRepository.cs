@@ -16,25 +16,6 @@ namespace DutchTreat.Data
             _ctx = ctx;
             _logger = logger;
         }
-
-        public void AddEntity(object model)
-        {
-            _ctx.Add(model);
-        }
-
-        public IEnumerable<Order> GetAllOrders()
-        {
-            return _ctx.Orders
-                .Include(o => o.Items)
-                .ThenInclude(i => i.Product)
-                .ToList();
-        }
-
-        public IEnumerable<Order> GetAllOrders(bool includeItems)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Product> GetAllProducts()
         {
             try
@@ -52,7 +33,13 @@ namespace DutchTreat.Data
                 return null;
             }
         }
-
+        public IEnumerable<Order> GetAllOrders(bool includeItems)
+        {
+            return _ctx.Orders
+                .Include(o => o.Items)
+                .ThenInclude(i => i.Product)
+                .ToList();
+        }
         public Order GetOrderById(int id)
         {
             return _ctx.Orders
@@ -68,10 +55,15 @@ namespace DutchTreat.Data
                 .Where(p => p.Category == category)
                 .ToList();
         }
-
         public bool SaveAll()
         {
             return _ctx.SaveChanges() > 0;
+        }
+
+
+        public void AddEntity(object model)
+        {
+            _ctx.Add(model);
         }
 
 

@@ -25,7 +25,6 @@ namespace DutchTreat.Data
                 string filePath = Path.Combine(_env.ContentRootPath, "Data/art.json");
                 var json = File.ReadAllText(filePath);
                 var products = JsonSerializer.Deserialize<IEnumerable<Product>>(json);
-
                 _ctx.Products.AddRange(products);
 
                 var order = _ctx.Orders.Where(o => o.Id == 1).FirstOrDefault();

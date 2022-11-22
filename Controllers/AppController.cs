@@ -51,7 +51,7 @@ namespace DutchTreat.Controllers
 
         public IActionResult Shop()
         {
-            IEnumerable<Data.Entities.Product> results = _repository.GetAllProducts();
+            var results = _repository.GetAllProducts();
             return View(results);
         }
     }

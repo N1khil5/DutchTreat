@@ -27,6 +27,14 @@ namespace DutchTreat.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasColumnType("money");
+
+            modelBuilder.Entity<OrderItem>()
+                .Property(o => o.UnitPrice)
+                .HasColumnType("money");
+
             modelBuilder.Entity<Order>()
                 .HasData(new Order()
                 {
