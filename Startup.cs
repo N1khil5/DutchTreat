@@ -34,7 +34,17 @@ namespace DutchTreat
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DutchContext>();
+
+            services.AddIdentity<StoreUser, IdentityRole>(cfg =>
+            {
+                cfg.User.RequireUniqueEmail = true;
+            })
+                .AddEntityFrameworkStores<DutchContext>();
+
+            services.AddDbContext<DutchContext>(cfg =>
+            {
+                cfg.UseSqlServer(_config.GetConnectionString("DutchContextDb"));
+            });
 
             services.AddTransient<IMailService, NullMailService>();
 
@@ -66,6 +76,11 @@ namespace DutchTreat
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
 
             app.UseEndpoints(cfg =>
             {

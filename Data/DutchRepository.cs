@@ -42,13 +42,10 @@ namespace DutchTreat.Data
         {
             if (includeItems)
             {
-                //    return _ctx.Orders
-                //.Include(o => o.Items)
-                //.ThenInclude(i => i.Product)
-                //.ToList(); 
-
                 return _ctx.Orders
-    .ToList();
+            .Include(o => o.Items)
+            .ThenInclude(i => i.Product)
+            .ToList(); 
             }
             else
             {
