@@ -25,7 +25,7 @@ namespace DutchTreat.Data
         {
             base.OnConfiguring(bldr);
 
-            bldr.UseSqlServer(_config.GetConnectionString("DutchConnectionString"));
+            bldr.UseSqlServer(_config["ConnectionStrings:DutchContextDb"]);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
