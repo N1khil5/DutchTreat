@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DutchTreat.Migrations
 {
     [DbContext(typeof(DutchContext))]
-    [Migration("20221114151337_SeedData")]
-    partial class SeedData
+    [Migration("20221123113548_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,7 +47,7 @@ namespace DutchTreat.Migrations
                         new
                         {
                             Id = 1,
-                            OrderDate = new DateTime(2022, 11, 14, 15, 13, 37, 307, DateTimeKind.Local).AddTicks(2368),
+                            OrderDate = new DateTime(2022, 11, 23, 11, 35, 48, 114, DateTimeKind.Utc).AddTicks(1215),
                             OrderNumber = "12345"
                         });
                 });
@@ -70,7 +70,7 @@ namespace DutchTreat.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("UnitPrice")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("money");
 
                     b.HasKey("Id");
 
@@ -120,7 +120,7 @@ namespace DutchTreat.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("money");
 
                     b.Property<string>("Size")
                         .IsRequired()

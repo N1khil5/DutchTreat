@@ -1,8 +1,11 @@
-﻿using DutchTreat.Data.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DutchTreat.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace DutchTreat.Data
 {
@@ -22,9 +25,11 @@ namespace DutchTreat.Data
             {
                 _logger.LogInformation("GetAllProducts was called");
 
-                return _ctx.Products
-                           .OrderBy(p => p.Artist)
+                var products = _ctx.Products
+                           .OrderBy(p => p.Title)
                            .ToList();
+
+                return products;
 
             }
             catch (Exception ex)
@@ -35,10 +40,21 @@ namespace DutchTreat.Data
         }
         public IEnumerable<Order> GetAllOrders(bool includeItems)
         {
-            return _ctx.Orders
-                .Include(o => o.Items)
-                .ThenInclude(i => i.Product)
-                .ToList();
+            if (includeItems)
+            {
+                //    return _ctx.Orders
+                //.Include(o => o.Items)
+                //.ThenInclude(i => i.Product)
+                //.ToList(); 
+
+                return _ctx.Orders
+    .ToList();
+            }
+            else
+            {
+                return _ctx.Orders
+                    .ToList();
+            }
         }
         public Order GetOrderById(int id)
         {

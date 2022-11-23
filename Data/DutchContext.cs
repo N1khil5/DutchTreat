@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DutchTreat.Data.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace DutchTreat.Data
 {
-    public class DutchContext : IdentityDbContext<StoreUser>
+    public class DutchContext : DbContext
     {
         private readonly IConfiguration _config;
 
@@ -24,8 +23,8 @@ namespace DutchTreat.Data
         protected override void OnConfiguring(DbContextOptionsBuilder bldr)
         {
             base.OnConfiguring(bldr);
-
-            bldr.UseSqlServer(_config["ConnectionStrings:DutchContextDb"]);
+            var dbConfig = _config.GetConnectionString("DutchContextDb");
+            bldr.UseSqlServer(dbConfig);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -44,7 +43,7 @@ namespace DutchTreat.Data
                 .HasData(new Order()
                 {
                     Id = 1,
-                    OrderDate = DateTime.Now,
+                    OrderDate = DateTime.UtcNow,
                     OrderNumber = "12345"
                 });
         }

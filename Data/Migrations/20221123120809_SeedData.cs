@@ -9,18 +9,22 @@ namespace DutchTreat.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.InsertData(
+            migrationBuilder.UpdateData(
                 table: "Orders",
-                columns: new[] { "Id", "OrderDate", "OrderNumber" },
-                values: new object[] { 1, new DateTime(2022, 11, 14, 15, 13, 37, 307, DateTimeKind.Local).AddTicks(2368), "12345" });
+                keyColumn: "Id",
+                keyValue: 1,
+                column: "OrderDate",
+                value: new DateTime(2022, 11, 23, 12, 8, 9, 520, DateTimeKind.Utc).AddTicks(7648));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
+            migrationBuilder.UpdateData(
                 table: "Orders",
                 keyColumn: "Id",
-                keyValue: 1);
+                keyValue: 1,
+                column: "OrderDate",
+                value: new DateTime(2022, 11, 23, 11, 35, 48, 114, DateTimeKind.Utc).AddTicks(1215));
         }
     }
 }
