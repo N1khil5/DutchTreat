@@ -1,5 +1,12 @@
-﻿@{
+﻿@model LoginViewModel
+@{
     ViewBag.Title = "Home Page";
+}
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 }
 <div class="row">
     <div class="col-md-9">
@@ -40,22 +47,36 @@
 
         <div>
             <div id="loginToggle">Login</div>
-            <form class="popup-form">
-                <div>
-                    <label>Username</label>
-                    <input />
+            <form method="post">
+                <div class="form-group">
+                    <div asp-validation-summary="All"></div>
+                    <label asp-for="Username">Username</label>
+                    <input asp-for="Username" />
+                    <span asp-validation-for="Username" class="text-warning"></span>
                 </div>
-                <div>
-                    <label>Password</label>
-                    <input type="password" />
+                <div class="form-group">
+                    <label asp-for="Password">Password</label>
+                    <input asp-for="Password" type="password" />
+                    <span asp-validation-for="Password" class="text-warning"></span>
                 </div>
-                <div>
-                    <input type="checkbox" />
-                    <label>Remember me</label>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input asp-for="RememberMe" type="checkbox" class="form-check-input" />
+                        <label asp-for="RememberMe" class="form-check-label"> Remember Me?</label>
+                    </div>
+                    <span asp-validation-for="RememberMe" class="text-warning"></span>
                 </div>
-                <div>
-                    <input type="submit" value="Login" />
+                <div class="form-group">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <span class="nav-item"><a class="btn btn-success" asp-controller="Account" asp-action="Logout">Logout</a></span>
+                    }
+                    else
+                    {
+                        <span class="nav-item"><a class="btn btn-success" asp-controller="Account" asp-action="Login">Login</a></span>
+                    }
                 </div>
+
             </form>
         </div>
     </div>

@@ -14,7 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DutchTreat.Controllers
 {
-    public class AccountController: Controller
+    public class AccountController : Controller
     {
         private readonly ILogger<AccountController> _logger;
         private readonly SignInManager<StoreUser> _signInManager;
@@ -33,7 +33,7 @@ namespace DutchTreat.Controllers
         {
             if (this.User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index","App");
+                return RedirectToAction("Index", "App");
             }
             return View();
         }
@@ -53,7 +53,7 @@ namespace DutchTreat.Controllers
                     }
                     else
                     {
-                        RedirectToAction("Shop", "App");
+                        return RedirectToAction("Shop", "App");
                     }
                 }
             }
@@ -76,28 +76,32 @@ namespace DutchTreat.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(model.Username);
-                var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
-
-                if (result.Succeeded)
+                if (user != null)
                 {
-                    //Create the token
-                    var claims = new[]
+                    var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+
+                    if (result.Succeeded)
                     {
-                        new Claim(JwtRegisteredClaimNames.Sub, user.Email),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                        new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
-                    };
+                        //Create the token
+                        var claims = new[]
+                        {
+                            new Claim(JwtRegisteredClaimNames.Sub, user.Email),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
+                        };
 
-                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Token:Key"]));
-                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Token:Key"]));
+                        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                    var token = new JwtSecurityToken(_config["Token:Issuer"], _config["Token:Audience"], claims, signingCredentials:creds, expires:DateTime.UtcNow.AddMinutes(20));
+                        var token = new JwtSecurityToken(_config["Token:Issuer"], _config["Token:Audience"], claims, signingCredentials: creds, expires: DateTime.UtcNow.AddMinutes(20));
 
-                    return Created("", new
-                    {
-                        Token = new JwtSecurityTokenHandler().WriteToken(token),
-                        expiration = token.ValidTo
-                    });
+                        return Created("", new
+                        {
+                            Token = new JwtSecurityTokenHandler().WriteToken(token),
+                            expiration = token.ValidTo
+                        });
+                    }
+
                 }
             }
             return BadRequest();

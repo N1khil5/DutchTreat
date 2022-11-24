@@ -23,6 +23,7 @@ namespace DutchTreat.Controllers
             _repository = repository;
         }
 
+        [Authorize]
         public IActionResult Index()
         {
             return View();
