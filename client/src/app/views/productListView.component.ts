@@ -4,7 +4,7 @@ import { Store } from "../services/store.service";
 @Component({
     selector: "product-list",
     templateUrl: "productListView.component.html",
-    styleUrls: ["productsListView.component.css"]
+    styleUrls: ["productListView.component.css"]
 })
 
 export default class ProductListView implements OnInit{
