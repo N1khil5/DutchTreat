@@ -9,8 +9,7 @@ import { LoginRequest } from "../shared/LoginResults";
 })
 
 export class LoginPage {
-    constructor(private store: Store, private router: Router) {
-    }
+    constructor(private store: Store, private router: Router) { }
     public creds: LoginRequest = {
         username: "",
         password: ""

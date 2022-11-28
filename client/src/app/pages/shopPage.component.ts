@@ -2,7 +2,7 @@
 
 @Component({
     selector: "shop-page",
-    template: "shopPage.component.html"
+    templateUrl: "shopPage.component.html"
     })
 export class shopPage {
 
